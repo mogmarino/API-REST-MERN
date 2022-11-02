@@ -68,9 +68,22 @@ io.on("connection", (socket) => {
   });
 
   socket.on("nueva tarea", (tarea) => {
-    console.log(tarea);
     const proyecto = tarea.proyecto;
-    console.log(proyecto);
     socket.to(proyecto).emit("tarea agregada", tarea);
+  });
+
+  socket.on("eliminar tarea", (tarea) => {
+    const proyecto = tarea.proyecto;
+    socket.to(proyecto).emit("tarea eliminada", tarea);
+  });
+
+  socket.on("actualizar tarea", (tarea) => {
+    const proyecto = tarea.proyecto._id;
+    socket.to(proyecto).emit("tarea actualizada", tarea);
+  });
+
+  socket.on("cambiar estado", (tarea) => {
+    const proyecto = tarea.proyecto._id;
+    socket.to(proyecto).emit("estado actualizado", tarea);
   });
 });
